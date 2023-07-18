@@ -46,7 +46,7 @@ def train_rfc():
     return model
 
 # Prediction based on test_data for now
-def predict(X_pred : pd.DataFrame=None):
+def pred(X_pred : pd.DataFrame=None):
     if X_pred is None:
         config = Config()
         test_data = pd.read_csv(config.TEST_DATA)
