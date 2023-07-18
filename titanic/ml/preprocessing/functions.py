@@ -1,25 +1,54 @@
-### IMPORTS ###
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 import numpy as np
 import pandas as pd
 
+# Transformers
 
-### FUNCTIONS ###
-class Preprocessor:
+class Dropper(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
 
-    # add missing ages
-    def add_missing_values(self, df):
+    def transform(self, X):
+        X = X.drop(columns=['Cabin', 'Ticket', 'Name'])
+        return X
 
-        # add missing age values
-        mean_age = round(df['Age'].mean())
-        df['Age'].fillna(value=mean_age, inplace=True)
+class Imputer(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
 
-        # add missing embarked values
-        mode_embarked = df['Embarked'].mode()[0]
-        df['Embarked'].fillna(value=mode_embarked, inplace=True)
+    def transform(self, X):
+        age_imputer = SimpleImputer(strategy='mean')
+        X['Age'] = age_imputer.fit_transform(X[['Age']])
 
-        return df
+        embarked_mode = X['Embarked'].mode()
+        X['Embarked'].fillna(value=embarked_mode[0], inplace=True)
 
-    # drop cabin value
-    def drop_columns(self, df):
-        df.drop(columns=['Cabin', 'Ticket', 'Name'], inplace=True)
-        return df
+        return X
+
+class Encoder(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        gen_dict = {'male': 0, 'female': 1}
+        X['Sex'] = X['Sex'].map(gen_dict)
+
+        encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
+        tmp = np.array(X['Embarked']).reshape(-1, 1)
+        encoded = encoder.fit_transform(tmp)
+        encoded_columns = encoder.get_feature_names_out(['Embarked'])
+        X_encoded = pd.DataFrame(encoded, columns=encoded_columns, index=X.index)
+        X = pd.concat([X.drop(columns=['Embarked']), X_encoded], axis=1)
+
+        return X
+
+class Scaler(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        scaler = MinMaxScaler()
+        X_scaled = scaler.fit_transform(X)
+        return X_scaled

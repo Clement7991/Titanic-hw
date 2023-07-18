@@ -50,8 +50,8 @@ def predict(X_pred: pd.DataFrame=None):
 
     return y_pred
 
-if __name__ == '__main__':
-    preprocess_data()
-    preprocess_pred()
-    train_rfc()
-    predict()
+# if __name__ == '__main__':
+#     preprocess_data()
+#     preprocess_pred()
+#     train_rfc()
+#     predict()
