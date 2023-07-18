@@ -3,6 +3,7 @@ import pandas as pd
 from config import Config
 from titanic.ml.preprocessing.pipeline import pipeline_init
 from titanic.ml.model.model_rfc import init_rfc
+from sklearn.impute import SimpleImputer
 
 ### DATA ###
 def preprocess_data():
@@ -16,14 +17,20 @@ def preprocess_data():
     X_preproc = pipeline.fit_transform(X)
     X_preproc_df = pd.DataFrame(X_preproc)
 
-    print('Data preprocessed')
+    # print('Data preprocessed')
 
     return X_preproc_df, y
 
-def preprocess_pred(X_pred):
+def preprocess_pred(X_pred=None):
     pipeline=pipeline_init()
+
     X_pred_preproc=pipeline.fit_transform(X_pred)
-    return pd.DataFrame(X_pred_preproc)
+    X_pred_preproc_df = pd.DataFrame(X_pred_preproc)
+
+    imputer=SimpleImputer(strategy='mean')
+    X_pred_preproc_df_vf=pd.DataFrame(imputer.fit_transform(X_pred_preproc_df))
+
+    return X_pred_preproc_df_vf
 
 
 ### MODEL ###
@@ -34,24 +41,25 @@ def train_rfc():
     model=init_rfc()
     model.fit(X_preproc_df, y)
 
-    print('Model trained')
+    # print('Model trained')
+
     return model
 
-def predict(X_pred: pd.DataFrame=None):
+# Prediction based on test_data for now
+def predict(X_pred : pd.DataFrame=None):
     if X_pred is None:
-        return "To predict, the model requires a DataFrame as input."
+        config = Config()
+        test_data = pd.read_csv(config.TEST_DATA)
+        X_pred=test_data
 
-    model=train_rfc()
     X_pred_preproc_df = preprocess_pred(X_pred)
 
-    y_pred = model.predict(X_pred_preproc_df)
+    model = train_rfc()
 
-    print('Prediction made')
+    y_pred = model.predict(X_pred_preproc_df.iloc[[0]])
 
-    return y_pred
 
-# if __name__ == '__main__':
-#     preprocess_data()
-#     preprocess_pred()
-#     train_rfc()
-#     predict()
+    if y_pred == 0:
+        print('Whatever you do, do not board!')
+    else:
+        print('Welcome aboard!')
