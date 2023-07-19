@@ -44,6 +44,32 @@ class Encoder(BaseEstimator, TransformerMixin):
 
         return X
 
+class EncoderPred(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        gen_dict = {'male': 0, 'female': 1}
+        X['Sex'] = X['Sex'].map(gen_dict)
+
+        if X['Embarked'].item() == 'S':
+            X['Embarked_C'] = 0
+            X['Embarked_Q'] = 0
+            X['Embarked_S'] = 1
+            X.drop(columns=['Embarked'], inplace=True)
+        elif X['Embarked'].item() == 'C':
+            X['Embarked_C'] = 1
+            X['Embarked_Q'] = 0
+            X['Embarked_S'] = 0
+            X.drop(columns=['Embarked'], inplace=True)
+        else:
+            X['Embarked_C'] = 0
+            X['Embarked_Q'] = 1
+            X['Embarked_S'] = 0
+            X.drop(columns=['Embarked'], inplace=True)
+
+        return X
+
 class Scaler(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self

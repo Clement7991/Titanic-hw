@@ -5,7 +5,7 @@ run_train:
 	python -c 'from titanic.interface.main import train_rfc; train_rfc()'
 
 run_pred:
-	python -c 'from titanic.interface.main import predict; predict()'
+	python -c 'from titanic.interface.main import pred; pred()'
 
 run_all: run_preprocess run_train run_pred
 
