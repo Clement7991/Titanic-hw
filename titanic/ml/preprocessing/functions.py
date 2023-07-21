@@ -12,7 +12,7 @@ class Dropper(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        X = X.drop(columns=['Cabin', 'Ticket', 'Name'])
+        X = X.drop(columns=['Cabin', 'Ticket', 'Name', 'PassengerId'])
         return X
 
 class Imputer(BaseEstimator, TransformerMixin):
