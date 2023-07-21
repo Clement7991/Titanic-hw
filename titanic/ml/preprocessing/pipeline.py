@@ -2,10 +2,10 @@
 from sklearn.pipeline import Pipeline
 from titanic.ml.preprocessing.functions import Dropper, EncoderPred,Imputer,Encoder,Scaler
 
-### PIPELINE ###
+### PIPELINES ###
 
 def pipeline_train():
-    # Create the pipeline
+    ''' Returns a preprocessing pipeline for the train set '''
     pipeline = Pipeline([
         ('Dropper', Dropper()),
         ('Imputer', Imputer()),
@@ -16,6 +16,7 @@ def pipeline_train():
     return pipeline
 
 def pipeline_pred():
+    ''' Returns a preprocessing pipeline for the prediction dataframe'''
     pipeline = Pipeline([
         ('Dropper', Dropper()),
         ('Imputer', Imputer()),
