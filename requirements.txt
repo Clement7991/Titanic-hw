@@ -1,10 +1,13 @@
-scikit-learn
-pandas
 numpy
+pandas
+scikit-learn
+google-cloud-bigquery
+google-cloud-storage
 
-
-
+# prevent bq
 # API
 fastapi
 pytz
 uvicorn
+# tests
+httpx
