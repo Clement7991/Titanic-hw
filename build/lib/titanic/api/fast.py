@@ -2,7 +2,7 @@
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from titanic.api.main import preprocess_pred, train_rfc
+from titanic.interface.main_local import pred, preprocess_pred, train_rfc
 
 # instanciations
 app = FastAPI() # instanciation of app
