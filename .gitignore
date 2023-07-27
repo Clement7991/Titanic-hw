@@ -3,5 +3,6 @@ notebooks/Titanic_vf
 .env.yaml
 *.egg-info
 *.vscode
-*.csv
+titanic/data/train.csv
+titanic/data/test.csv
 titanic/data/titanic-393415-e3b61a50fb0a.json
