@@ -68,19 +68,19 @@ class EncoderPred(BaseEstimator, TransformerMixin):
 
         # For a one row prediction dataframe to fit the pipeline, let's encode manually.
         if X['Embarked'].item() == 'S':
-            X['Embarked_C'] = 0
-            X['Embarked_Q'] = 0
-            X['Embarked_S'] = 1
+            X['x0_C'] = 0
+            X['x0_Q'] = 0
+            X['x0_S'] = 1
 
         elif X['Embarked'].item() == 'C':
-            X['Embarked_C'] = 1
-            X['Embarked_Q'] = 0
-            X['Embarked_S'] = 0
+            X['x0_C'] = 1
+            X['x0_Q'] = 0
+            X['x0_S'] = 0
 
         else:
-            X['Embarked_C'] = 0
-            X['Embarked_Q'] = 1
-            X['Embarked_S'] = 0
+            X['x0_C'] = 0
+            X['x0_Q'] = 1
+            X['x0_S'] = 0
 
         X.drop(columns=['Embarked'], inplace=True)
 

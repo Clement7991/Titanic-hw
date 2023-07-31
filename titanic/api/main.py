@@ -60,7 +60,7 @@ def train_rfc():
 
     return model
 
-# Prediction based on test_data for now
+# Prediction
 def pred(X_pred : pd.DataFrame=None):
     ''' returns the recommendation based on the prediction made '''
 
@@ -69,7 +69,7 @@ def pred(X_pred : pd.DataFrame=None):
         return 'Please provide information necessary to the prediction'
 
     # preprocess X_pred
-    X_pred_preproc_df = preprocess_pred(X_pred.iloc[[0]])
+    X_pred_preproc_df = preprocess_pred(X_pred)
 
     # instanciate model
     model = train_rfc()

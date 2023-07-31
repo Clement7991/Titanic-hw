@@ -28,7 +28,7 @@ def predict(Pclass: int, Sex: str, Age:float, Sibs:int, Parch:int, Fare:float, E
         Pclass=[Pclass],
         Sex= [Sex],
         Age= [Age],
-        Sibs=[Sibs],
+        SibSp=[Sibs],
         Parch=[Parch],
         Fare=[Fare],
         Embarked=[Embarked]
