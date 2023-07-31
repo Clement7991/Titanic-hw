@@ -20,21 +20,17 @@ app.add_middleware(
 ### API RESPONSE ###
 
 @app.get("/predict")
-def predict(PassengerId:int,Pclass: int,Name: str, Sex: str, Age:float, Sibs:int, Parch:int, Ticket:str, Fare:float, Cabin:str, Embarked:str):
+def predict(Pclass: int, Sex: str, Age:float, Sibs:int, Parch:int, Fare:float, Embarked:str):
     ''' Returns a recommendation on whether to board the Titanic or not. '''
 
     # constitution of prediction dataframe based on arguments passed
     X_pred=pd.DataFrame(dict(
-        PassengerId=[PassengerId],
         Pclass=[Pclass],
-        Name=[Name],
         Sex= [Sex],
         Age= [Age],
         Sibs=[Sibs],
         Parch=[Parch],
-        Ticket=[Ticket],
         Fare=[Fare],
-        Cabin=[Cabin],
         Embarked=[Embarked]
     ))
 

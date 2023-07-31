@@ -13,6 +13,7 @@ class Dropper(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         X = X.drop(columns=['Cabin', 'Ticket', 'Name', 'PassengerId'])
+
         return X
 
 class Imputer(BaseEstimator, TransformerMixin):
@@ -49,7 +50,7 @@ class Encoder(BaseEstimator, TransformerMixin):
         encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
         tmp = np.array(X['Embarked']).reshape(-1, 1)
         encoded = encoder.fit_transform(tmp)
-        encoded_columns = encoder.get_feature_names_out(['Embarked'])
+        encoded_columns = encoder.get_feature_names_out()
         X_encoded = pd.DataFrame(encoded, columns=encoded_columns, index=X.index)
         X = pd.concat([X.drop(columns=['Embarked']), X_encoded], axis=1)
 
@@ -94,4 +95,6 @@ class Scaler(BaseEstimator, TransformerMixin):
     def transform(self, X):
         scaler = MinMaxScaler()
         X_scaled = scaler.fit_transform(X)
-        return X_scaled
+        X_scaled_df = pd.DataFrame(X_scaled, columns=X.columns, index=X.index)
+
+        return X_scaled_df

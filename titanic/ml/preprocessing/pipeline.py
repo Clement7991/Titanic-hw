@@ -15,13 +15,12 @@ def pipeline_train():
 
     return pipeline
 
+
 def pipeline_pred():
-    ''' Returns a preprocessing pipeline for the prediction dataframe'''
-    pipeline = Pipeline([
-        ('Dropper', Dropper()),
-        ('Imputer', Imputer()),
+    ''' Returns a preprocessing pipeline for the data obtained from api'''
+    pipeline_pred = Pipeline([
         ('Encoder', EncoderPred()),
         ('Scaler', Scaler())
     ])
 
-    return pipeline
+    return pipeline_pred
